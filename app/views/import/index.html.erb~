@@ -1,0 +1,6 @@
+
+
+
+<h2 align ="center">Salseforce Migration</h2>
+
+<%= button_to "Start Migration to OpenERP",:action =>'start_migration',:controller => 'import'%>

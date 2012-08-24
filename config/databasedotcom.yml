@@ -1,0 +1,9 @@
+host: login.salesforce.com             # Use test.salesforce.com for sandbox
+client_secret: 3874661597601320755   # This is the Consumer Secret from Salesforce
+client_id: 3MVG9Y6d_Btp4xp5VQ0xfrvAMorA0vgUNRawZuuBjgjPWr8kvswlcarxy19wUpw_oFS9JLw.fbusHUofwFiU1   # This is the Consumer Key from Salesforce
+#sobject_module: (Account, Contact,Lead)           # See below for details on using modules
+debugging: false                       # Can be useful while developing
+username: kalpana.i@pragtech.com
+password: Kalpana123wi71mpHc84lKLJUn40pXo4OwU
+
+

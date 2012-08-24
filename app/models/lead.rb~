@@ -1,0 +1,44 @@
+class Lead < ActiveRecord::Base
+ attr_accessible :Name, :IsDeleted, :Title,:Street,:City,:PostalCode,:Country,:State,:Phone,:MobilePhone,:Fax,:Email,:Description,:IsConverted,:LeadSource,:Company
+#set_table_name "lead"
+  
+   def self.call_lead_save(led)
+    led.each do |lead1|
+       crmlead = CrmLead.new   #oor
+       rescountry = ResCountry.new
+       crmlead.contact_name = lead1.Name
+
+       puts  "=============="
+        p lead1.Name
+       puts"=============="
+        p crmlead.contact_name
+       puts "================"
+       crmlead.name = lead1.Name
+       crmlead.active = 'TRUE' if lead1.IsDeleted == 'false'
+       crmlead.function = lead1.Title
+       crmlead.street = lead1.Street  
+       crmlead.city = lead1.City      
+       crmlead.zip = lead1.PostalCode   
+       crmlead.country_id =  ResCountry.search([["name","=",lead1.Country]])[0] 
+       state_id = ""
+       crmlead.state_id =  ResCountryState.search([["code","=",lead1.State]])[0]  
+       crmlead.phone = lead1.Phone  
+       crmlead.mobile = lead1.MobilePhone  
+       crmlead.fax  = lead1.Fax  
+       crmlead.email_from = lead1.Email   
+       crmlead.description = lead1.Description 
+       if lead1.IsConverted == 'true'
+         crmlead.type = 'opportunity'
+       else
+         crmlead.type = 'lead'
+       end  
+       if CrmCaseResourceType.name != lead1.LeadSource
+          CrmCaseResourceType.create(name: lead1.LeadSource)
+          crmlead.type_id = CrmCaseResourceType.search([["name","=",lead1.LeadSource]])[0]    
+       end           
+          crmlead.type_id = CrmCaseResourceType.search([["name","=",lead1.LeadSource]])[0]
+          crmlead.partner_lead = lead1.Company                                                  
+          crmlead.save   
+     end
+  end  
+end
